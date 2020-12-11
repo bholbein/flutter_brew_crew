@@ -1,16 +1,16 @@
-import 'package:brew_crew/services/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:brew_crew/services/auth.dart';
 
-class SignIn extends StatefulWidget {
+class Register extends StatefulWidget {
   final Function toggleView;
 
-  SignIn({this.toggleView});
+  Register({this.toggleView});
 
   @override
-  _SignInState createState() => _SignInState();
+  _RegisterState createState() => _RegisterState();
 }
 
-class _SignInState extends State<SignIn> {
+class _RegisterState extends State<Register> {
   //final AuthService _auth = AuthService();
 
   // text field state
@@ -30,11 +30,11 @@ class _SignInState extends State<SignIn> {
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
-        title: Text('Sign in to Brew Crew'),
+        title: Text('Register to Brew Crew'),
         actions: [
           FlatButton.icon(
             icon: Icon(Icons.person),
-            label: Text('Register'),
+            label: Text('Sign in'),
             onPressed: () {
               widget.toggleView();
             },
@@ -82,14 +82,14 @@ class _SignInState extends State<SignIn> {
               RaisedButton(
                 color: Colors.brown[700],
                 child: Text(
-                  'Sign in',
+                  'Register',
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () async {
                   if (_formKey.currentState.validate()) {
                     final snackBar = SnackBar(
                         content: Text(
-                      'Signing in',
+                      'Registration going on',
                       textAlign: TextAlign.center,
                     ));
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
