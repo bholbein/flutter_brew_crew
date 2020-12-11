@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:brew_crew/services/auth.dart';
+import 'package:email_validator/email_validator.dart';
 
 class Register extends StatefulWidget {
   final Function toggleView;
@@ -11,17 +12,15 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  //final AuthService _auth = AuthService();
+  final AuthService _auth = AuthService();
 
   // text field state
   String email = '';
   String password = '';
+  String error = '';
 
   // form validation
   final _formKey = GlobalKey<FormState>();
-
-  // Scaffold state
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -55,12 +54,9 @@ class _RegisterState extends State<Register> {
                 onChanged: (val) {
                   setState(() => email = val);
                 },
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter e-mail adress';
-                  }
-                  return null;
-                },
+                validator: (value) => EmailValidator.validate(value)
+                    ? null
+                    : 'Please enter e-mail adress',
               ),
               SizedBox(height: 20.0),
               TextFormField(
@@ -68,15 +64,12 @@ class _RegisterState extends State<Register> {
                     new InputDecoration(labelText: 'Enter your password:'),
                 keyboardType: TextInputType.visiblePassword,
                 obscureText: true,
-                onChanged: (val) {
-                  setState(() => password = val);
+                onChanged: (value) {
+                  setState(() => password = value);
                 },
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter password';
-                  }
-                  return null;
-                },
+                validator: (value) => value.length < 6
+                    ? 'Please enter password with 6 or more characters'
+                    : null,
               ),
               SizedBox(height: 20.0),
               RaisedButton(
@@ -93,10 +86,21 @@ class _RegisterState extends State<Register> {
                       textAlign: TextAlign.center,
                     ));
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    dynamic result = await _auth.registerWithEmailAndPassword(
+                        email, password);
+                    if (result == null) {
+                      setState(() => error = 'please try agagin');
+                    }
                   }
-                  print(email);
-                  print(password);
                 },
+              ),
+              SizedBox(height: 12.0),
+              Text(
+                error,
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 14.0,
+                ),
               ),
             ],
           ),
