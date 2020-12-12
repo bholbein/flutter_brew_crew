@@ -48,8 +48,7 @@ class _SignInState extends State<SignIn> {
             children: [
               SizedBox(height: 20.0),
               TextFormField(
-                decoration:
-                    new InputDecoration(labelText: 'Enter your mail address:'),
+                decoration: InputDecoration(labelText: 'Enter your email:'),
                 keyboardType: TextInputType.emailAddress,
                 onChanged: (val) {
                   setState(() => email = val);
@@ -60,8 +59,7 @@ class _SignInState extends State<SignIn> {
               ),
               SizedBox(height: 20.0),
               TextFormField(
-                decoration:
-                    new InputDecoration(labelText: 'Enter your password:'),
+                decoration: InputDecoration(labelText: 'Enter your password:'),
                 keyboardType: TextInputType.visiblePassword,
                 obscureText: true,
                 onChanged: (val) {
@@ -88,7 +86,7 @@ class _SignInState extends State<SignIn> {
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       dynamic result = await _auth.signInWithEmailAndPassWord(
                           email, password);
-                      setState(() => error = result);
+                      if (result is String) setState(() => error = result);
                     }
                   }),
               SizedBox(height: 12.0),

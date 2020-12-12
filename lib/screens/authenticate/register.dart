@@ -48,8 +48,7 @@ class _RegisterState extends State<Register> {
             children: [
               SizedBox(height: 20.0),
               TextFormField(
-                decoration:
-                    new InputDecoration(labelText: 'Enter your mail address:'),
+                decoration: InputDecoration(labelText: 'Enter your email:'),
                 keyboardType: TextInputType.emailAddress,
                 onChanged: (val) {
                   setState(() => email = val);
@@ -60,8 +59,7 @@ class _RegisterState extends State<Register> {
               ),
               SizedBox(height: 20.0),
               TextFormField(
-                decoration:
-                    new InputDecoration(labelText: 'Enter your password:'),
+                decoration: InputDecoration(labelText: 'Enter your password:'),
                 keyboardType: TextInputType.visiblePassword,
                 obscureText: true,
                 onChanged: (value) {
