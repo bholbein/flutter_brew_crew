@@ -73,26 +73,31 @@ class _SignInState extends State<SignIn> {
               ),
               SizedBox(height: 20.0),
               RaisedButton(
-                color: Colors.brown[700],
-                child: Text(
-                  'Sign in',
-                  style: TextStyle(color: Colors.white),
-                ),
-                onPressed: () async {
-                  if (_formKey.currentState.validate()) {
-                    final snackBar = SnackBar(
-                        content: Text(
-                      'Signing in',
-                      textAlign: TextAlign.center,
-                    ));
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    dynamic result =
-                        await _auth.signInWithEmailAndPassWord(email, password);
-                    if (result == null) {
-                      setState(() => error = 'Error Signing In');
+                  color: Colors.brown[700],
+                  child: Text(
+                    'Sign in',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () async {
+                    if (_formKey.currentState.validate()) {
+                      final snackBar = SnackBar(
+                          content: Text(
+                        'Signing in',
+                        textAlign: TextAlign.center,
+                      ));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      dynamic result = await _auth.signInWithEmailAndPassWord(
+                          email, password);
+                      setState(() => error = result);
                     }
-                  }
-                },
+                  }),
+              SizedBox(height: 12.0),
+              Text(
+                error,
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 14.0,
+                ),
               ),
             ],
           ),
