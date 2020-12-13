@@ -92,7 +92,6 @@ class _SignInState extends State<SignIn> {
                             if (result is String) {
                               setState(() => error = result);
                             }
-                            setState(() => loading = false);
                           }
                         }),
                     SizedBox(height: 12.0),

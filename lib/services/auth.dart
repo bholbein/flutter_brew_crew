@@ -34,6 +34,10 @@ class AuthService {
       UserCredential result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       User user = result.user;
+      if (await DatabaseService(uid: user.uid).getUserData() == null) {
+        await DatabaseService(uid: user.uid)
+            .updateUserData('0', 'new crew member', 100);
+      }
       return _userFromFirebaseUser(user);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {

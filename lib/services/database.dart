@@ -18,4 +18,14 @@ class DatabaseService {
       'strength': strength,
     });
   }
+
+  // get User Data
+  Future getUserData() async {
+    return await brewCollection.doc(uid).get();
+  }
+
+  // create a stream that notifies changes to firestore docs
+  Stream<QuerySnapshot> get brews {
+    return brewCollection.snapshots();
+  }
 }
