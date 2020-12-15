@@ -6,3 +6,14 @@ class UserObj {
 
   String toString() => "User ID: ${this.uid}";
 }
+
+class UserData {
+  // User Data object used for database streams
+
+  final String uid;
+  final String name;
+  final String sugars;
+  final int strength;
+
+  UserData({this.uid, this.name, this.strength, this.sugars});
+}
