@@ -79,14 +79,14 @@ class _SettingsFormState extends State<SettingsForm> {
                       style: TextStyle(color: Colors.white),
                     ),
                     onPressed: () async {
-                      setState(() {
-                        DatabaseService(uid: user.uid).updateUserData(
+                      if (_formKey.currentState.validate()) {
+                        await DatabaseService(uid: user.uid).updateUserData(
                             name: (_currentName ?? userData.name),
                             sugars: (_currentSugars ?? userData.sugars),
                             strength: (_currentStrength ?? userData.strength)
                                 .round());
-                      });
-                      Navigator.of(context).pop();
+                        Navigator.pop(context);
+                      }
                     },
                   ),
                 ],
