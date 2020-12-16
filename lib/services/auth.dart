@@ -38,8 +38,8 @@ class AuthService {
       DocumentSnapshot snapshot =
           await DatabaseService(uid: user.uid).getUserData();
       if (!snapshot.exists) {
-        await DatabaseService(uid: user.uid)
-            .updateUserData('0', 'existing crew member', 100);
+        await DatabaseService(uid: user.uid).updateUserData(
+            sugars: '0', name: 'existing crew member', strength: 100);
       }
       return _userFromFirebaseUser(user);
     } on FirebaseAuthException catch (e) {
@@ -59,7 +59,7 @@ class AuthService {
       User user = result.user;
       // create a new document for the user with the uid once it has been generated (await)
       await DatabaseService(uid: user.uid)
-          .updateUserData('0', 'new crew member', 100);
+          .updateUserData(sugars: '0', name: 'new crew member', strength: 100);
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());

@@ -13,7 +13,7 @@ class DatabaseService {
 
   // method to udpate UserData given several input. Firestore will
   // create new documents if nothing has been created for this uid
-  Future updateUserData(String sugars, String name, int strength) async {
+  Future updateUserData({String sugars, String name, int strength}) async {
     return await brewCollection.doc(uid).set({
       'sugars': sugars,
       'name': name,

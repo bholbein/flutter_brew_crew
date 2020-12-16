@@ -17,7 +17,7 @@ class _SettingsFormState extends State<SettingsForm> {
   // form values
   String _currentName;
   String _currentSugars;
-  int _currentStrength = 100;
+  int _currentStrength;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +39,7 @@ class _SettingsFormState extends State<SettingsForm> {
                   ),
                   SizedBox(height: 20.0),
                   TextFormField(
+                    initialValue: userData.name,
                     decoration: textInputDecoration,
                     validator: (val) =>
                         val.isEmpty ? 'Please enter a name' : null,
@@ -57,13 +58,17 @@ class _SettingsFormState extends State<SettingsForm> {
                   ),
                   Slider(
                     // either current strength or 100
-                    value: (_currentStrength ?? 100).toDouble(),
-                    activeColor: Colors.brown[_currentStrength ?? 100],
-                    inactiveColor: Colors.brown[_currentStrength ?? 100],
+                    value: (_currentStrength ?? userData.strength).toDouble(),
+                    activeColor:
+                        Colors.brown[_currentStrength ?? userData.strength],
+                    inactiveColor:
+                        Colors.brown[_currentStrength ?? userData.strength],
                     min: 100.0,
                     max: 900.0,
                     divisions: 8,
-                    label: _currentStrength.round().toString(),
+                    label: (_currentStrength ?? userData.strength)
+                        .round()
+                        .toString(),
                     onChanged: (val) =>
                         setState(() => _currentStrength = val.round()),
                   ),
@@ -74,16 +79,20 @@ class _SettingsFormState extends State<SettingsForm> {
                       style: TextStyle(color: Colors.white),
                     ),
                     onPressed: () async {
-                      print(_currentName);
-                      print(_currentSugars);
-                      print(_currentStrength);
+                      setState(() {
+                        DatabaseService(uid: user.uid).updateUserData(
+                            name: (_currentName ?? userData.name),
+                            sugars: (_currentSugars ?? userData.sugars),
+                            strength: (_currentStrength ?? userData.strength)
+                                .round());
+                      });
+                      Navigator.of(context).pop();
                     },
                   ),
                 ],
               ),
             );
           } else {
-            print(snapshot);
             return Loading();
           }
         });
