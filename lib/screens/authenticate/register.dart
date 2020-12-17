@@ -47,6 +47,11 @@ class _RegisterState extends State<Register> {
               ],
             ),
             body: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/coffee_bg.png'),
+                ),
+              ),
               padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
               child: Form(
                 key: _formKey,
